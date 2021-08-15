@@ -91,3 +91,6 @@ Open `index.razor` (or any other Razor page) and inject your ObjectStore.
 ```
 
 That's it. You should now have a new IndexedDB for your App setup. You can use `DevTools` in your browser to inspect the results. 
+
+## Samples
+https://github.com/Ericvf/Blazor.ClientStorage.Samples
