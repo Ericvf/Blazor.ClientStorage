@@ -18,7 +18,13 @@ namespace Blazor.ClientStorage
 
         public BlazorClientStorage(IBlazorClientStorageConfiguration blazorClientStorageConfiguration, IServiceProvider serviceProvider, IJSRuntime jsRuntime, ILogger<BlazorClientStorage> logger)
         {
-            this.blazorClientStorageConfiguration = blazorClientStorageConfiguration;
+            this.blazorClientStorageConfiguration = blazorClientStorageConfiguration ?? new BlazorClientStorageConfiguration()
+            {
+                DatabaseName = nameof(BlazorClientStorage),
+                RuntimeObject = nameof(BlazorClientStorage),
+                DatabaseVersion = 1,
+            };
+
             this.serviceProvider = serviceProvider;
             this.jSRuntime = jsRuntime;
             this.logger = logger;
@@ -58,7 +64,7 @@ namespace Blazor.ClientStorage
                 .ToArray();
 
             logger.LogInformation($"Found ${objectStoreDescriptors.Length} IObjectStore");
-            
+
             await jSRuntime.InvokeVoidAsync(GetRuntimeMethodName("open"), new object[] { blazorClientStorageConfiguration.DatabaseName, blazorClientStorageConfiguration.DatabaseVersion, objectStoreDescriptors });
 
             isObjectStoreLoaded = true;
@@ -76,7 +82,7 @@ namespace Blazor.ClientStorage
 
         public async Task<T> Get<TKey, T>(string objectStore, TKey key)
         {
-            return await InvokeAsync<T>("get", new object[] { objectStore, key});
+            return await InvokeAsync<T>("get", new object[] { objectStore, key });
         }
 
         public async Task Delete<TKey, T>(string objectStore, TKey key)
