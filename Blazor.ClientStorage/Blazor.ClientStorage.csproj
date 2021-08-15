@@ -4,10 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
     <Authors>Ericvf</Authors>
     <Company>Appbyfex</Company>
     <Description>Blazor Webassembly Library to provide client storage via IndexedDB.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/Ericvf/Blazor.ClientStorage</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Ericvf/Blazor.ClientStorage</PackageProjectUrl>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -22,5 +26,12 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.9" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>
