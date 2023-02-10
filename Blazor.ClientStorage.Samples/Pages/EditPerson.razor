@@ -1,0 +1,36 @@
+﻿@page "/editperson/{PersonKey:int}"
+<h1>Edit person</h1>
+
+<EditForm Model="@Person" OnSubmit="FormSubmitted">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" required @bind-value="@Person.name" />
+    </div>
+    <div class="form-group">
+        <label for="Age">Age</label>
+        <input type="number" required @bind-value="@Person.age" />
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Save" />
+</EditForm>
+
+
+@inject PersonObjectStore personObjectStore
+@inject NavigationManager navigationManager
+@code{
+    [Parameter]
+    public int PersonKey { get; set; }
+
+    Person Person = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Person = await personObjectStore.Get(PersonKey);
+    }
+
+    async Task FormSubmitted(EditContext editContext)
+    {
+        await personObjectStore.Put(Person);
+        navigationManager.NavigateTo("/");
+    }
+}

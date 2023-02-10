@@ -1,0 +1,57 @@
+﻿@page "/"
+
+<h1>Blazor ClientStorage</h1>
+
+@if (PersonList?.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in PersonList)
+            {
+                <tr>
+                    <td>@person.name</td>
+                    <td>@person.age</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="@(e => edit(person))">✎</button>                    
+                        <button class="btn btn-primary" @onclick="@(e => delete(person))">X</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No persons data found</p>
+}
+
+<NavLink class="btn btn-primary" href="addperson">Add</NavLink>
+
+@inject PersonObjectStore personObjectStore
+@inject NavigationManager navigationManager
+@code{
+    IList<Person> PersonList;
+    protected override async Task OnInitializedAsync()
+    {
+        PersonList = (await personObjectStore.OpenCursor()).ToList();
+    }
+
+    async void delete(Person person)
+    {
+        await personObjectStore.Delete(person);
+        PersonList.Remove(person);
+        StateHasChanged();
+    }
+
+    void edit(Person person)
+    {
+        navigationManager.NavigateTo("editperson/" + person.key);
+    }
+}
