@@ -24,6 +24,14 @@ Make sure you make yourself familiar with [IndexedDB](https://developer.mozilla.
   - `.AddBlazorClientStorage()`
 - Add the following script tag to your `wwwroot\index.html`
   - `<script src="Blazor.ClientStorage.js"></script>`
+- Add and modify the following configuration to your `wwwroot\appsettings.json`
+```json
+"Blazor.ClientStorage": {
+    "DatabaseName": "BlazorClientStorage",
+    "DatabaseVersion": 1,
+    "RuntimeObject": "BlazorClientStorage"
+}
+```
 
 # Usage
 
