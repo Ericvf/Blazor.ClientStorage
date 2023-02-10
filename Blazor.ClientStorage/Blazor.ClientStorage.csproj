@@ -1,37 +1,33 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.4</Version>
-    <Authors>Ericvf</Authors>
-    <Company>Appbyfex</Company>
-    <Description>Blazor Webassembly Library to provide client storage via IndexedDB.</Description>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/Ericvf/Blazor.ClientStorage</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Ericvf/Blazor.ClientStorage</PackageProjectUrl>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<Version>1.0.5</Version>
+		<Authors>Ericvf</Authors>
+		<Company>Appbyfex</Company>
+		<Description>Blazor Webassembly Library to provide client storage via IndexedDB.</Description>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/Ericvf/Blazor.ClientStorage</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Ericvf/Blazor.ClientStorage</PackageProjectUrl>
+	</PropertyGroup>
 
-	<ItemGroup>
-		<Content Include="wwwroot/Blazor.ClientStorage.js">
-			<Pack>true</Pack>
-		</Content>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="7.0.0" />
 	</ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Class1.cs" />
-  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.9" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="5.0.0" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="..\LICENSE">
-	    <Pack>True</Pack>
-	    <PackagePath></PackagePath>
-	  </None>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
 	</ItemGroup>
 </Project>

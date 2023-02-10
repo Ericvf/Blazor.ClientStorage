@@ -13,9 +13,9 @@
 
     public class OptionsDescriptor
     {
-        public string keyPath { get; set; }
+        public string KeyPath { get; set; }
 
-        public bool autoIncrement { get; set; }
+        public bool AutoIncrement { get; set; }
 
     }
 
@@ -28,6 +28,6 @@
 
     public class IndexOptionsDescriptor
     {
-        public bool unique { get; set; }
+        public bool Unique { get; set; }
     }
 }
