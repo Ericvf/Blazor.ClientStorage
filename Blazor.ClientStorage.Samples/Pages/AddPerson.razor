@@ -1,0 +1,27 @@
+﻿@page "/addperson"
+<h1>Add person</h1>
+
+<EditForm Model="@Person" OnSubmit="FormSubmitted">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" required @bind-value="@Person.name" />
+    </div>
+    <div class="form-group">
+        <label for="Age">Age</label>
+        <input type="number" required @bind-value="@Person.age" />
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Save" />
+</EditForm>
+
+
+@inject PersonObjectStore personObjectStore
+@inject NavigationManager navigationManager
+@code{
+    Person Person = new();
+    async Task FormSubmitted(EditContext editContext)
+    {
+        await personObjectStore.Add(Person);
+        navigationManager.NavigateTo("/");
+    }
+}
