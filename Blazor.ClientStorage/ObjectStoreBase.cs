@@ -15,7 +15,9 @@ namespace Blazor.ClientStorage
 
         public abstract string Name { get; }
 
-        public async virtual Task Put(T item) => await blazorClientStorage.Put<TKey, T>(Name, item);
+        protected IBlazorClientStorage BlazorClientStorage => blazorClientStorage;
+
+        public abstract Task Put(T item);
 
         public async virtual Task Add(T item) => await blazorClientStorage.Add<TKey, T>(Name, item);
 
@@ -23,7 +25,11 @@ namespace Blazor.ClientStorage
 
         public async virtual Task Delete(T item) => await blazorClientStorage.Delete<TKey, T>(Name, item.key);
 
+        public async virtual Task DeleteKey(TKey key) => await blazorClientStorage.Delete<TKey, T>(Name, key);
+
         public async virtual Task<IEnumerable<T>> GetAll() => await blazorClientStorage.GetAll<TKey, T>(Name);
+
+        public async virtual Task<IEnumerable<T>> GetByIndex(string indexName, string value) => await blazorClientStorage.GetbyIndex<T>(Name, indexName, value);
 
         public async virtual Task<IEnumerable<T>> OpenCursor() => await blazorClientStorage.OpenCursor<TKey, T>(Name);
       

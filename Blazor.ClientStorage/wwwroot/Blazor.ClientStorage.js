@@ -53,9 +53,14 @@ class BlazorClientStorage {
         });
     }
 
-    put(storeName, model) {
+    put(storeName, model, keyed) {
         return this.executeWithTransaction(storeName, (store, transaction) => {
-            store.put(model, model.key);
+            if (keyed) {
+                store.put(model);
+            }
+            else {
+                store.put(model, model.key);
+            }
         });
     }
 
@@ -67,7 +72,7 @@ class BlazorClientStorage {
             var request = store.get(key);
             request.onerror = (e) => { reject(e.target.error.message); }
             request.onsuccess = (e) => {
-                const model = e.target.result;
+                const model = e.target.result || {};
                 model.key = key;
                 resolve(model);
             }
@@ -87,6 +92,31 @@ class BlazorClientStorage {
             var request = store.getAll();
             request.onerror = (e) => { reject(e.target.error.message); }
             request.onsuccess = (e) => resolve(e.target.result);
+        });
+    }
+
+    getByIndex(storeName, indexName, value) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.idbDatabase.transaction(storeName, "readonly");
+            const store = transaction.objectStore(storeName);
+
+            var indexStore = store.index(indexName);
+            var cursor = indexStore.openCursor(value);
+            var results = [];
+
+            cursor.onerror = (e) => reject(e.target.error.message);
+            cursor.onsuccess = function (event) {
+                cursor = event.target.result;
+                if (cursor) {
+                    var item = cursor.value;
+                    item.key = cursor.primaryKey;
+                    results.push(item);
+
+                    cursor.continue();
+                } else {
+                    resolve(results);
+                }
+            };
         });
     }
 

@@ -70,9 +70,9 @@ namespace Blazor.ClientStorage
             isObjectStoreLoaded = true;
         }
 
-        public async Task Put<TKey, T>(string objectStore, T item)
+        public async Task Put<TKey, T>(string objectStore, T item, bool keyed)
         {
-            await InvokeVoidAsync("put", new object[] { objectStore, item });
+            await InvokeVoidAsync("put", new object[] { objectStore, item, keyed });
         }
 
         public async Task Add<TKey, T>(string objectStore, T item)
@@ -98,6 +98,11 @@ namespace Blazor.ClientStorage
         public async Task<IEnumerable<T>> OpenCursor<TKey, T>(string objectStore)
         {
             return await InvokeAsync<IEnumerable<T>>("openCursor", objectStore);
+        }
+
+        public async Task<IEnumerable<T>> GetbyIndex<T>(string objectStore, string indexName, string value)
+        {
+            return await InvokeAsync<IEnumerable<T>>("getByIndex", objectStore, indexName, value);
         }
     }
 }

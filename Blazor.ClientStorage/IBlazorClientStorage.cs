@@ -7,7 +7,7 @@ namespace Blazor.ClientStorage
     {
         Task Open();
 
-        Task Put<TKey, T>(string objectStore, T item);
+        Task Put<TKey, T>(string objectStore, T item, bool key);
 
         Task Add<TKey, T>(string objectStore, T item);
 
@@ -16,6 +16,8 @@ namespace Blazor.ClientStorage
         Task Delete<TKey, T>(string objectStore, TKey key);
 
         Task<IEnumerable<T>> GetAll<TKey, T>(string objectStore);
+
+        Task<IEnumerable<T>> GetbyIndex<T>(string objectStore, string indexName, string value);
 
         Task<IEnumerable<T>> OpenCursor<TKey, T>(string objectStore);
     }
